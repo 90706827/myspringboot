@@ -1,0 +1,25 @@
+server:
+  port: 8081
+banner:
+  charset: UTF-8
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/myspringboot?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Hongkong
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 1MB
+      max-request-size: 10MB
+      resolve-lazily: false
+  cache:
+    ehcache:
+      type: ehcache
+      config: ehcache.xml

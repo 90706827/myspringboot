@@ -1,0 +1,14 @@
+<h1>上传图片</h1>
+<form name="form1" action="/upload/file.html" method="post" enctype="multipart/form-data">
+选择文件：<input type="file" name="file" />
+<p>
+<input type="submit" value="提交"/>
+</form>
+
+<p>
+<form name="form2" action="/upload/files.html" method="post" enctype="multipart/form-data">
+选择文件：<input type="file" name="files" /><p>
+选择文件：<input type="file" name="files" />
+<p>
+<input type="submit" value="提交"/>
+</form>

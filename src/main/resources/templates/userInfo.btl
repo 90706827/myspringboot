@@ -1,0 +1,16 @@
+<html>
+<body>
+${user.id}
+<p/>
+${user.name}
+
+<h1>订单提交</h1>
+<form action="/user/order.html" method="post">
+订单名称：<input name="order.name" />
+订单明细1：<input name="details[0].name"/>
+订单明细2：<input name="details[1].name"/>
+<p>
+<input type="submit" value="提交"/>
+</form>
+</body>
+</html>
