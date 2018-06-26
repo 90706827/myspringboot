@@ -1,59 +1,39 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration scan="true" scanPeriod="600 seconds" debug="true">
-    <contextName>myspringboot</contextName>
-    <property name="rootPath" value="/app/user"/>
-    <property name="appPath" value="/log/appName/%d{yyyyMMdd}"/>
-    <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-    <property name="commonPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS}|[%thread]|%-5level|%logger{50}|->%msg%n;"/>
-    <property name="bizPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|->%msg%n;"/>
-    <!-- 控制台输出 -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
-        </encoder>
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="10 minutes">
+    <property name="LOG_HOME" value="F:\\logs"/>
+
+    <appender name="stdot" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p][%c][%M][%L]-> %m%n</pattern>
+        </layout>
     </appender>
-    <!-- 业务日志 -->
-    <appender name="biz" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志文件输出的文件名-->
-            <FileNamePattern>${rootPath}/${appPath}/biz_.log</FileNamePattern>
-            <!--日志文件保留天数-->
-            <MaxHistory class="">30</MaxHistory>
+            <FileNamePattern>${LOG_HOME}/log.%d{yyyy-MM-dd}(%i).log</FileNamePattern>          、
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>10MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${commonPattern}</pattern>
+        <encoder>
+            <charset>utf-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%p][%c][%M][%L]-> %m%n</pattern>
         </encoder>
-        <!--日志文件最大的大小-->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>1MB</MaxFileSize>
-        </triggeringPolicy>
+        <append>false</append>
+        <prudent>false</prudent>
     </appender>
 
-    <!-- 通信日志 -->
-    <appender name="net" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志文件输出的文件名-->
-            <FileNamePattern>${rootPath}/${appPath}/net_.log</FileNamePattern>
-            <!--日志文件保留天数-->
-            <MaxHistory class="">30</MaxHistory>
-        </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${commonPattern}</pattern>
-        </encoder>
-        <!--日志文件最大的大小-->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-
-            <MaxFileSize>1MB</MaxFileSize>
-        </triggeringPolicy>
-    </appender>
-
-    <logger name="com.jangni" level="DEBUG">
-        <appender-ref ref="biz"/>
-        <appender-ref ref="net"/>
+    <logger name="org.mortbay.log" additivity="false"  level="ERROR">
+        <appender-ref ref="stdot" />
     </logger>
-    <logger name="org.springframework.beans.factory" level="ERROR"/>
-    <!-- 日志输出级别 -->
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
+
+    <logger name="org.mybatis.spring" additivity="false"  level="ERROR">
+        <appender-ref ref="stdot" />
+    </logger>
+
+    <root level="debug">
+        <appender-ref ref="stdot" />
+        <appender-ref ref="file" />
     </root>
+
 </configuration>

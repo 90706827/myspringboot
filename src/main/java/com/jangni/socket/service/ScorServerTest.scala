@@ -24,7 +24,7 @@ class ScorServerTest (port:Int) {
         .childHandler(new ChannelInitializer[SocketChannel] {
           @throws[Exception]
           def initChannel(ch: SocketChannel): Unit = {
-            ch.pipeline.addLast(new TimeServerHandler)
+            ch.pipeline.addLast(new MTimeServerHandler)
           }
         })
 //        .option(ChannelOption.SO_BACKLOG,128)

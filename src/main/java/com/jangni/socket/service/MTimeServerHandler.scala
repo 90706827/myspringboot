@@ -8,7 +8,7 @@ import io.netty.channel.{ChannelFuture, ChannelFutureListener, ChannelHandlerCon
   * Time: 17:07
   * Description:
   */
-class TimeServerHandler extends ChannelInboundHandlerAdapter {
+class MTimeServerHandler extends ChannelInboundHandlerAdapter {
 
   override def channelActive(ctx: ChannelHandlerContext): Unit = {
     val time = ctx.alloc.buffer(4) // (2)
